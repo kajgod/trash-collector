@@ -4,8 +4,9 @@
   "description": "A retro game scripted by Leonardo",
   "main": "src/main.ts",
   "scripts": {
-    "dev": "tsc --outDir ./build & sass ./src/main.scss ./build/style.css & parcel build/index.html",
-    "build": "tsc --outDir ./build & sass ./src/main.scss ./build/style.css & parcel build build/index.html",
+    "make": "tsc --outDir ./build & sass ./src/main.scss ./build/style.css",
+    "dev": "npm run make & parcel build/index.html",
+    "build": "npm run make & parcel build build/index.html",
     "test": "jest"
   },
   "repository": {

@@ -1,7 +1,14 @@
+import { startLevel } from "./scripts/actions";
+import { Game } from "./scripts/types";
 import Player from "./classes/player.class";
-console.log("Tusam");
 
-const playerOne = new Player(10, 10);
-console.log("I tu sam");
+const mountGame: HTMLElement = document.getElementById("mount-game");
 
-playerOne.up();
+const game: Game = startLevel(0, mountGame);
+const player: Player = game.player;
+
+const ticker = setInterval(() => {
+    player.move();
+}, 30);
+
+document.addEventListener("keydown", (e: KeyboardEvent) => player.switchDirection(e.code));
