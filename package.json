@@ -1,0 +1,32 @@
+{
+  "name": "trash-collector",
+  "version": "0.0.1",
+  "description": "A retro game scripted by Leonardo",
+  "main": "src/main.ts",
+  "scripts": {
+    "dev": "tsc --outDir ./build & sass ./src/main.scss ./build/style.css & parcel build/index.html",
+    "build": "tsc --outDir ./build & sass ./src/main.scss ./build/style.css & parcel build build/index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kajgod/trash-collector.git"
+  },
+  "keywords": [],
+  "author": "Leonardo & Jurica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kajgod/trash-collector/issues"
+  },
+  "homepage": "https://github.com/kajgod/trash-collector#readme",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "jest": "^25.4.0",
+    "normalize.scss": "^0.1.0",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.5",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {}
+}
