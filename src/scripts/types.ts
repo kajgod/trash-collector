@@ -1,4 +1,7 @@
 import Player from "../classes/player.class";
+import Bush from "../classes/bush.class";
+import Trash from "../classes/trash.class";
+import Animal from "../classes/animal.class";
 
 export enum Direction {
   Up,
@@ -8,5 +11,8 @@ export enum Direction {
 }
 
 export interface Game {
-    player: Player
+    player: Player,
+    bushes: Bush[],
+    trashes: Trash[],
+    animals: Animal[]
 }

@@ -15,7 +15,7 @@ body {
     #container {
       width: calc(100vmin - #{2 * $padding});
       height: calc(100vmin - #{2 * $padding});
-      background: $red;
+      background: $grey-light;
       #mount-game {
         position: relative;
         width: 100%;

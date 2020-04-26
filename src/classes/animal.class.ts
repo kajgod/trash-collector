@@ -1,7 +1,7 @@
 import Element from "./element.class";
 import { Direction } from "../scripts/types";
 
-export default class Player extends Element {
+export default class Animal extends Element {
   constructor(
     x: number,
     y: number,
@@ -29,20 +29,21 @@ export default class Player extends Element {
     }
   }
 
-  switchDirection(dir: string) {
-    switch (dir) {
-      case "ArrowRight":
-        this.direction = Direction.Right;
-        break;
-      case "ArrowLeft":
+  switchDirection() {
+    switch (this.direction) {
+      case Direction.Right:
         this.direction = Direction.Left;
         break;
-      case "ArrowUp":
-        this.direction = Direction.Up;
+      case Direction.Left:
+        this.direction = Direction.Right;
         break;
-      case "ArrowDown":
+      case Direction.Up:
         this.direction = Direction.Down;
+        break;
+      case Direction.Down:
+        this.direction = Direction.Up;
         break;
     }
   }
+
 }

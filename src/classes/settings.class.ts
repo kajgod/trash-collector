@@ -6,7 +6,6 @@ export default class Settings {
 
   constructor(
     public element: HTMLElement,
-    public elementId: string,
     public elementClasses: string,
     public x: number,
     public y: number
@@ -16,7 +15,6 @@ export default class Settings {
 
   createElement() {
     this.sprite = document.createElement("div");
-    this.sprite.setAttribute("id", this.elementId);
     this.sprite.setAttribute("class", this.elementClasses);
     this.sprite.style.width = this.playerSize;
     this.sprite.style.height = this.playerSize;
@@ -31,12 +29,12 @@ export default class Settings {
   }
 
   posX(): string {
-    const percent: number = (this.x-1)*100 / this.resolution;
+    const percent: number = ((this.x - 1) * 100) / this.resolution;
     return `${percent.toString()}%`;
   }
 
   posY(): string {
-    const percent: number = (this.y-1)*100 / this.resolution;
+    const percent: number = ((this.y - 1) * 100) / this.resolution;
     return `${percent.toString()}%`;
   }
 }
