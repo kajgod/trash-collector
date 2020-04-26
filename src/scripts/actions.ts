@@ -24,7 +24,7 @@ const startLevel = (level: number, mountGame: HTMLElement): Game => {
             x,
             y,
             mountGame,
-            "element player",
+            "element",
             Direction.Right
           );
           break;

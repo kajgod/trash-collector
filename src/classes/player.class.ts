@@ -2,6 +2,8 @@ import Element from "./element.class";
 import { Direction } from "../scripts/types";
 
 export default class Player extends Element {
+  artDiv: HTMLDivElement;
+
   constructor(
     x: number,
     y: number,
@@ -10,6 +12,9 @@ export default class Player extends Element {
     public direction: Direction
   ) {
     super(x, y, element, elementClasses);
+    this.artDiv = document.createElement("div");
+    this.artDiv.setAttribute("class", "player right");
+    this.sprite.appendChild(this.artDiv);
   }
 
   move() {
@@ -30,17 +35,35 @@ export default class Player extends Element {
   }
 
   switchDirection(dir: string) {
+    switch (this.direction) {
+      case Direction.Right:
+        this.artDiv.classList.toggle("right");
+        break;
+      case Direction.Left:
+        this.artDiv.classList.toggle("left");
+        break;
+      case Direction.Up:
+        this.artDiv.classList.toggle("up");
+        break;
+      case Direction.Down:
+        this.artDiv.classList.toggle("down");
+        break;
+    }
     switch (dir) {
       case "ArrowRight":
+        this.artDiv.classList.toggle("right");
         this.direction = Direction.Right;
         break;
       case "ArrowLeft":
+        this.artDiv.classList.toggle("left");
         this.direction = Direction.Left;
         break;
       case "ArrowUp":
+        this.artDiv.classList.toggle("up");
         this.direction = Direction.Up;
         break;
       case "ArrowDown":
+        this.artDiv.classList.toggle("down");
         this.direction = Direction.Down;
         break;
     }

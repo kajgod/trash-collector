@@ -1,4 +1,25 @@
-&.player {
-  background: $yellow-dark;
-  border-radius: 50%;
+.player {
+  width: 100%;
+  height: 100%;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  background: url("assets/player.png") no-repeat;
+  background-size: 100% 200%;
+  animation: play 1s steps(2) infinite;
+  &.right {
+  transform: rotate(-90deg);
+  }
+  &.up {
+  transform: rotate(180deg);
+  }
+  &.left {
+  transform: rotate(90deg);
+  }
+  &.down {
+  transform: rotate(0deg);
+  }
+}
+@keyframes play {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 200%; }
 }
