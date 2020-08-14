@@ -1,4 +1,4 @@
-const level: string =`
+const level = `
 BBBBBBBBBBBBBBBBBBBB
 B000000000000000000B
 B000000000000T00000B
@@ -21,3 +21,4 @@ B00T00000B000B00000B
 BBBBBBBBBBBBBBBBBBBB
 `;
 export default level;
+//# sourceMappingURL=1.js.map
