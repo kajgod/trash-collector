@@ -362,6 +362,7 @@ var Player = /*#__PURE__*/function (_Element) {
       this.x = nX;
       this.y = nY;
       this.direction = nD;
+      this.artDiv.setAttribute("class", "player right");
       this.offsetX = 0;
       this.offsetY = 0;
       this.sprite.style.left = this.posX();
@@ -953,7 +954,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46279" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33987" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

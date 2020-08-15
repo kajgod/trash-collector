@@ -17,6 +17,7 @@ export default class Player extends Element {
         this.x = nX;
         this.y = nY;
         this.direction = nD;
+        this.artDiv.setAttribute("class", "player right");
         this.offsetX = 0;
         this.offsetY = 0;
         this.sprite.style.left = this.posX();
