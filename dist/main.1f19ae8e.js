@@ -340,17 +340,34 @@ var Player = /*#__PURE__*/function (_Element) {
     _classCallCheck(this, Player);
 
     _this = _super.call(this, x, y, element, elementClasses);
+    _this.x = x;
+    _this.y = y;
     _this.direction = direction;
-    _this.artDiv = document.createElement("div");
 
-    _this.artDiv.setAttribute("class", "player right");
-
-    _this.sprite.appendChild(_this.artDiv);
+    _this.prepareElement();
 
     return _this;
   }
 
   _createClass(Player, [{
+    key: "prepareElement",
+    value: function prepareElement() {
+      this.artDiv = document.createElement("div");
+      this.artDiv.setAttribute("class", "player right");
+      this.sprite.appendChild(this.artDiv);
+    }
+  }, {
+    key: "newLevel",
+    value: function newLevel(nX, nY, nD) {
+      this.x = nX;
+      this.y = nY;
+      this.direction = nD;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.sprite.style.left = this.posX();
+      this.sprite.style.top = this.posY();
+    }
+  }, {
     key: "move",
     value: function move() {
       switch (this.direction) {
@@ -635,7 +652,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var level = "\nBBBBBBBBBBBBBBBB\nB0000000B000000B\nB00000000000000B\nB000B00T0000000B\nBP0000000000000B\nB00000000000000B\nB000000000000A0B\nB00000000B00000B\nB0000A0000000000\nB00000000000000B\nB00000000000000B\nB00B00000A00T00B\nB00000000000000B\nB00T00000B000B0B\nB00T00000B000B0B\nBBBBBBBBBBBBBBBB\n";
+var level = "\nBBBBBBBBBBBBBBBB\nBB00B000000000BB\nB000B0000000000B\nB00000000000000B\nB00000T000T00BBB\nB0000000B000000B\nBP00000BBB00000B\nB0000000B000000B\nB00000T000T0000B\nB00000000000000B\nB00000000000000B\nBBB000000000000B\nB00000000000000B\nB0000000000B000B\nBB000000000B00BB\nBBBBBBBBBBBBBBBB\n";
+var _default = level;
+exports.default = _default;
+},{}],"levels/2.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var level = "\nBBBBBBBBBBBBBBBB\nB00000000000000B\nB0000T000000000B\nB00000000000000B\nB000B00A000B000B\nB00000000000000B\nB00000000000000B\nBP0000000000000B\nB00000000000000B\nB00000000000000B\nB00000000000000B\nB000B000A00B000B\nB00000000000000B\nB0000000000T000B\nB00000000000000B\nBBBBBBBBBBBBBBBB\n";
+var _default = level;
+exports.default = _default;
+},{}],"levels/3.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var level = "\nBBBBBBBBBBBBBBBB\nB0000000B000000B\nB00000000000000B\nB000B00T0000000B\nB00000000000000B\nB00000000000000B\nB000000000000A0B\nBP0000000B00000B\nB0000A000000000B\nB00000000000000B\nB00000000000000B\nB00B00000A00T00B\nB00000000000000B\nB00T00000B000B0B\nB00T00000B000B0B\nBBBBBBBBBBBBBBBB\n";
 var _default = level;
 exports.default = _default;
 },{}],"levels/levels.js":[function(require,module,exports) {
@@ -648,12 +685,16 @@ exports.default = void 0;
 
 var _ = _interopRequireDefault(require("./1"));
 
+var _2 = _interopRequireDefault(require("./2"));
+
+var _3 = _interopRequireDefault(require("./3"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var levels = [_.default];
+var levels = [_.default, _2.default, _3.default];
 var _default = levels;
 exports.default = _default;
-},{"./1":"levels/1.js"}],"scripts/actions.js":[function(require,module,exports) {
+},{"./1":"levels/1.js","./2":"levels/2.js","./3":"levels/3.js"}],"scripts/actions.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -672,8 +713,6 @@ var _animal = _interopRequireDefault(require("../classes/animal.class"));
 var _types = require("../scripts/types");
 
 var _levels = _interopRequireDefault(require("../levels/levels"));
-
-var _main = require("../main");
 
 var _settings = _interopRequireDefault(require("../classes/settings.class"));
 
@@ -694,9 +733,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var player,
     bushes = [],
     trashes = [],
-    animals = [];
+    animals = [],
+    level,
+    mountGame;
+var active = true;
 
-var startLevel = function startLevel(level, mountGame) {
+var startLevel = function startLevel(levelNo, target) {
+  level = levelNo;
+  mountGame = target;
+
   var charList = _levels.default[level].split(/\n/);
 
   for (var y = 1; y <= _settings.default.resolution; y++) {
@@ -708,7 +753,12 @@ var startLevel = function startLevel(level, mountGame) {
           break;
 
         case "P":
-          player = new _player.default(x, y, mountGame, "element", _types.Direction.Right);
+          if (!player) {
+            player = new _player.default(x, y, mountGame, "element persistent", _types.Direction.Right);
+          } else {
+            player.newLevel(x, y, _types.Direction.Right);
+          }
+
           break;
 
         case "B":
@@ -726,15 +776,41 @@ var startLevel = function startLevel(level, mountGame) {
     }
   }
 
+  var setActive = function setActive(v) {
+    active = v;
+  };
+
   return {
     player: player,
     bushes: bushes,
     trashes: trashes,
-    animals: animals
+    animals: animals,
+    active: active,
+    setActive: setActive
   };
 };
 
 exports.startLevel = startLevel;
+
+var nextLevel = function nextLevel() {
+  bushes.length = 0;
+  trashes.length = 0;
+  animals.length = 0;
+  var children = mountGame.children;
+
+  while (children[0] && children[1]) {
+    [0, 1].map(function (v) {
+      return !children[v].classList.contains("persistent") && children[v].remove();
+    });
+  }
+
+  startLevel(level + 1, mountGame);
+};
+
+var firstLevel = function firstLevel() {
+  level = -1;
+  nextLevel();
+};
 
 var checkCollisions = function checkCollisions(game) {
   var diff = 100 / player.resolution;
@@ -801,8 +877,9 @@ var checkCollisions = function checkCollisions(game) {
 exports.checkCollisions = checkCollisions;
 
 var endGame = function endGame() {
-  clearInterval(_main.ticker);
-  alert("You are dead!");
+  active = false;
+  alert("You are dead! You managed to complete ".concat(level, " levels."));
+  firstLevel();
 };
 
 exports.endGame = endGame;
@@ -812,10 +889,16 @@ var checkCompletedLevel = function checkCompletedLevel() {
     if (trashes[i]) return;
   }
 
-  clearInterval(_main.ticker);
-  alert("Well done! You collected all ".concat(trashes.length, " pieces of trash!"));
+  if (level < _levels.default.length - 1) {
+    nextLevel();
+    return;
+  }
+
+  active = false;
+  alert("Well done! You completed all ".concat(level + 1, " levels!"));
+  firstLevel();
 };
-},{"../classes/player.class":"classes/player.class.js","../classes/bush.class":"classes/bush.class.js","../classes/trash.class":"classes/trash.class.js","../classes/animal.class":"classes/animal.class.js","../scripts/types":"scripts/types.js","../levels/levels":"levels/levels.js","../main":"main.js","../classes/settings.class":"classes/settings.class.js"}],"main.js":[function(require,module,exports) {
+},{"../classes/player.class":"classes/player.class.js","../classes/bush.class":"classes/bush.class.js","../classes/trash.class":"classes/trash.class.js","../classes/animal.class":"classes/animal.class.js","../scripts/types":"scripts/types.js","../levels/levels":"levels/levels.js","../classes/settings.class":"classes/settings.class.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -830,11 +913,13 @@ var game = (0, _actions.startLevel)(0, mountGame);
 var player = game.player;
 var animals = game.animals;
 var ticker = setInterval(function () {
-  player.move();
-  animals.map(function (animal) {
-    animal.move();
-  });
-  (0, _actions.checkCollisions)(game);
+  if (game.active) {
+    player.move();
+    animals.map(function (animal) {
+      animal.move();
+    });
+    (0, _actions.checkCollisions)(game);
+  }
 }, 100 / 3);
 exports.ticker = ticker;
 document.addEventListener("keydown", function (e) {
@@ -868,7 +953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39793" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46279" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

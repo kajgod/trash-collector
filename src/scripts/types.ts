@@ -11,8 +11,10 @@ export enum Direction {
 }
 
 export interface Game {
-    player: Player,
-    bushes: Bush[],
-    trashes: Trash[],
-    animals: Animal[]
+  player: Player;
+  bushes: Bush[];
+  trashes: Trash[];
+  animals: Animal[];
+  active: boolean;
+  setActive: (arg0: boolean) => void;
 }

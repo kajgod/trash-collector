@@ -4,11 +4,13 @@ const game = startLevel(0, mountGame);
 const player = game.player;
 const animals = game.animals;
 const ticker = setInterval(() => {
-    player.move();
-    animals.map(animal => {
-        animal.move();
-    });
-    checkCollisions(game);
+    if (game.active) {
+        player.move();
+        animals.map((animal) => {
+            animal.move();
+        });
+        checkCollisions(game);
+    }
 }, 100 / 3);
 document.addEventListener("keydown", (e) => player.switchDirection(e.code));
 export { ticker };

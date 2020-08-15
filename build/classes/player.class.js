@@ -3,10 +3,24 @@ import { Direction } from "../scripts/types";
 export default class Player extends Element {
     constructor(x, y, element, elementClasses, direction) {
         super(x, y, element, elementClasses);
+        this.x = x;
+        this.y = y;
         this.direction = direction;
+        this.prepareElement();
+    }
+    prepareElement() {
         this.artDiv = document.createElement("div");
         this.artDiv.setAttribute("class", "player right");
         this.sprite.appendChild(this.artDiv);
+    }
+    newLevel(nX, nY, nD) {
+        this.x = nX;
+        this.y = nY;
+        this.direction = nD;
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.sprite.style.left = this.posX();
+        this.sprite.style.top = this.posY();
     }
     move() {
         switch (this.direction) {

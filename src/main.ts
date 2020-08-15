@@ -10,11 +10,13 @@ const player: Player = game.player;
 const animals: Animal[] = game.animals;
 
 const ticker = setInterval(() => {
-  player.move();
-  animals.map(animal =>{
-    animal.move();
-  });
-  checkCollisions(game);
+  if (game.active) {
+    player.move();
+    animals.map((animal) => {
+      animal.move();
+    });
+    checkCollisions(game);
+  }
 }, 100 / 3);
 
 document.addEventListener("keydown", (e: KeyboardEvent) =>

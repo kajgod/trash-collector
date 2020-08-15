@@ -5,16 +5,31 @@ export default class Player extends Element {
   artDiv: HTMLDivElement;
 
   constructor(
-    x: number,
-    y: number,
+    public x: number,
+    public y: number,
     element: HTMLElement,
     elementClasses: string,
     public direction: Direction
   ) {
     super(x, y, element, elementClasses);
+    this.prepareElement();
+  }
+
+  prepareElement() {
     this.artDiv = document.createElement("div");
     this.artDiv.setAttribute("class", "player right");
     this.sprite.appendChild(this.artDiv);
+    
+  }
+
+  newLevel(nX: number, nY: number, nD: Direction) {
+    this.x = nX;
+    this.y = nY;
+    this.direction = nD;
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.sprite.style.left = this.posX();
+    this.sprite.style.top = this.posY();
   }
 
   move() {

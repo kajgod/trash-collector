@@ -10,9 +10,14 @@ import Settings from "../classes/settings.class";
 let player: Player,
   bushes: Bush[] = [],
   trashes: Trash[] = [],
-  animals: Animal[] = [];
+  animals: Animal[] = [],
+  level: number,
+  mountGame: HTMLElement;
+let active = true;
 
-const startLevel = (level: number, mountGame: HTMLElement): Game => {
+const startLevel = (levelNo: number, target: HTMLElement): Game => {
+  level = levelNo;
+  mountGame = target;
   const charList: string[] = levels[level].split(/\n/);
   for (let y: number = 1; y <= Settings.resolution; y++)
     for (let x: number = 1; x <= Settings.resolution; x++) {
@@ -21,13 +26,19 @@ const startLevel = (level: number, mountGame: HTMLElement): Game => {
         case "0":
           break;
         case "P":
-          player = new Player(
-            x,
-            y,
-            mountGame,
-            "element",
-            Direction.Right
-          );
+          if (!player) {
+            // start game
+            player = new Player(
+              x,
+              y,
+              mountGame,
+              "element persistent",
+              Direction.Right
+            );
+          } else {
+            // new level
+            player.newLevel(x, y, Direction.Right);
+          }
           break;
         case "B":
           bushes.push(new Bush(x, y, mountGame, "element bush", null));
@@ -48,12 +59,37 @@ const startLevel = (level: number, mountGame: HTMLElement): Game => {
           break;
       }
     }
+  const setActive = (v: boolean): void => {
+    active = v;
+  };
   return {
     player,
     bushes,
     trashes,
     animals,
+    active,
+    setActive,
   };
+};
+
+const nextLevel = () => {
+  //clear last level
+  bushes.length = 0;
+  trashes.length = 0;
+  animals.length = 0;
+  const children = mountGame.children;
+  while (children[0] && children[1]) {
+    [0, 1].map(
+      (v) =>
+        !children[v].classList.contains("persistent") && children[v].remove()
+    );
+  }
+  startLevel(level + 1, mountGame);
+};
+
+const firstLevel = () => {
+  level = -1;
+  nextLevel();
 };
 
 const checkCollisions = (game: Game) => {
@@ -93,24 +129,30 @@ const checkCollisions = (game: Game) => {
   // animal
   animals.map((animal) => {
     let [x1, y1]: number[] = animal.coordinates();
-      bushes.map((bush) => {
-        let [x2, y2]: number[] = bush.coordinates();
-        if (check(x1, y1, x2, y2)) animal.switchDirection();
-      });
+    bushes.map((bush) => {
+      let [x2, y2]: number[] = bush.coordinates();
+      if (check(x1, y1, x2, y2)) animal.switchDirection();
+    });
   });
 };
 
 const endGame = () => {
-  clearInterval(ticker);
-  alert("You are dead!");
+  active = false;
+  alert(`You are dead! You managed to complete ${level} levels.`);
+  firstLevel();
 };
 
 const checkCompletedLevel = () => {
   for (let i: number = 0; i < trashes.length; i++) {
     if (trashes[i]) return;
   }
-  clearInterval(ticker);
-  alert(`Well done! You collected all ${trashes.length} pieces of trash!`);
+  if (level < levels.length - 1) {
+    nextLevel();
+    return;
+  }
+  active = false;
+  alert(`Well done! You completed all ${level + 1} levels!`);
+  firstLevel();
 };
 
 export { startLevel, endGame, checkCollisions };
