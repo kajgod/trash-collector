@@ -139,8 +139,8 @@ var Settings = /*#__PURE__*/function () {
     this.elementClasses = elementClasses;
     this.x = x;
     this.y = y;
-    this.resolution = 20;
-    this.step = 10;
+    this.resolution = 16;
+    this.step = 8;
     this.playerSize = this.getPlayerSize();
   }
 
@@ -179,6 +179,7 @@ var Settings = /*#__PURE__*/function () {
 }();
 
 exports.default = Settings;
+Settings.resolution = 16;
 },{}],"classes/element.class.js":[function(require,module,exports) {
 "use strict";
 
@@ -634,7 +635,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var level = "\nBBBBBBBBBBBBBBBBBBBB\nB000000000000000000B\nB000000000000T00000B\nB00T0000B0000000000B\nB0000000B0000000000B\nB000A000B0000000000B\nB0000000B0000000000B\nB000000000000000000B\nB000B00T00000000000B\nBP00000000000000000B\nB000000000000000000B\nB000000000000A00000B\nB00000000B000000000B\nB0000A0000000000000B\nB00000000000000T000B\nB000000000000000000B\nB00B00000A00T000B00B\nB000000000000000000B\nB00T00000B000B00000B\nBBBBBBBBBBBBBBBBBBBB\n";
+var level = "\nBBBBBBBBBBBBBBBB\nB0000000B000000B\nB00000000000000B\nB000B00T0000000B\nBP0000000000000B\nB00000000000000B\nB000000000000A0B\nB00000000B00000B\nB0000A0000000000\nB00000000000000B\nB00000000000000B\nB00B00000A00T00B\nB00000000000000B\nB00T00000B000B0B\nB00T00000B000B0B\nBBBBBBBBBBBBBBBB\n";
 var _default = level;
 exports.default = _default;
 },{}],"levels/levels.js":[function(require,module,exports) {
@@ -674,6 +675,8 @@ var _levels = _interopRequireDefault(require("../levels/levels"));
 
 var _main = require("../main");
 
+var _settings = _interopRequireDefault(require("../classes/settings.class"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -696,8 +699,8 @@ var player,
 var startLevel = function startLevel(level, mountGame) {
   var charList = _levels.default[level].split(/\n/);
 
-  for (var y = 1; y <= 20; y++) {
-    for (var x = 1; x <= 20; x++) {
+  for (var y = 1; y <= _settings.default.resolution; y++) {
+    for (var x = 1; x <= _settings.default.resolution; x++) {
       var cur = charList[y][x - 1];
 
       switch (cur) {
@@ -812,7 +815,7 @@ var checkCompletedLevel = function checkCompletedLevel() {
   clearInterval(_main.ticker);
   alert("Well done! You collected all ".concat(trashes.length, " pieces of trash!"));
 };
-},{"../classes/player.class":"classes/player.class.js","../classes/bush.class":"classes/bush.class.js","../classes/trash.class":"classes/trash.class.js","../classes/animal.class":"classes/animal.class.js","../scripts/types":"scripts/types.js","../levels/levels":"levels/levels.js","../main":"main.js"}],"main.js":[function(require,module,exports) {
+},{"../classes/player.class":"classes/player.class.js","../classes/bush.class":"classes/bush.class.js","../classes/trash.class":"classes/trash.class.js","../classes/animal.class":"classes/animal.class.js","../scripts/types":"scripts/types.js","../levels/levels":"levels/levels.js","../main":"main.js","../classes/settings.class":"classes/settings.class.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -865,7 +868,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39793" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

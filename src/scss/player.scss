@@ -5,21 +5,19 @@
   image-rendering: pixelated;
   background: url("assets/player.png") no-repeat;
   background-size: 100% 200%;
-  animation: play 1s steps(2) infinite;
+  animation: play 0.75s steps(2) infinite;
   &.right {
-  transform: rotate(-90deg);
-  }
-  &.up {
-  transform: rotate(180deg);
+    transform: scaleX(1);
   }
   &.left {
-  transform: rotate(90deg);
-  }
-  &.down {
-  transform: rotate(0deg);
+    transform: scaleX(-1);
   }
 }
 @keyframes play {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 0% 200%; }
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 200%;
+  }
 }

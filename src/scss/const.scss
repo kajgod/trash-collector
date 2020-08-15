@@ -1,5 +1,5 @@
 // colors
-$black: #454950;
+$black: #000;
 $grey-dark: #8c989e;
 $grey: #cbd0d3;
 $grey-light: #e7eaeb;
@@ -16,8 +16,15 @@ $yellow-dark: #c57a01;
 $yellow: #fbad2f;
 
 $green-dark: #3ac162;
-$green: #5fcf80;
+$green: #86ab0b;
 $green-lighter: #d3ffb8;
 
 // sizes
 $padding: 10px;
+$resolution: 16;
+
+// mixins
+@mixin eight-bit {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}

@@ -4,8 +4,8 @@ export default class Settings {
         this.elementClasses = elementClasses;
         this.x = x;
         this.y = y;
-        this.resolution = 20;
-        this.step = 10;
+        this.resolution = 16;
+        this.step = 8;
         this.playerSize = this.getPlayerSize();
     }
     createElement() {
@@ -30,4 +30,5 @@ export default class Settings {
         return `${percent.toString()}%`;
     }
 }
+Settings.resolution = 16;
 //# sourceMappingURL=settings.class.js.map

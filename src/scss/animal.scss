@@ -1,6 +1,13 @@
 &.animal {
-    background: $blue;
-    border-radius: 50%;
-    z-index: 401;
+  background: url("assets/animal.png") no-repeat;
+  background-size: 100% 100%;
+  animation: liven 1s steps(2) infinite;
+}
+@keyframes liven {
+  0% {
+    background-position: 0% 0%;
   }
-  
+  100% {
+    background-position: 0% #{100% - 100% / $resolution};
+  }
+}

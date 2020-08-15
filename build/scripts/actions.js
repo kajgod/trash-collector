@@ -5,11 +5,12 @@ import Animal from "../classes/animal.class";
 import { Direction } from "../scripts/types";
 import levels from "../levels/levels";
 import { ticker } from "../main";
+import Settings from "../classes/settings.class";
 let player, bushes = [], trashes = [], animals = [];
 const startLevel = (level, mountGame) => {
     const charList = levels[level].split(/\n/);
-    for (let y = 1; y <= 20; y++)
-        for (let x = 1; x <= 20; x++) {
+    for (let y = 1; y <= Settings.resolution; y++)
+        for (let x = 1; x <= Settings.resolution; x++) {
             let cur = charList[y][x - 1];
             switch (cur) {
                 case "0":

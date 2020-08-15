@@ -1,6 +1,7 @@
 export default class Settings {
-  resolution: number = 20;
-  step: number = 10;
+  resolution = 16;
+  public static readonly resolution: number = 16;
+  step: number = 8;
   sprite: HTMLDivElement;
   playerSize: string;
 

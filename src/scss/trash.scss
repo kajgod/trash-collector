@@ -1,11 +1,4 @@
 &.trash {
-    background: $grey-dark;
-    animation: colorchange 1s;
-    
-  }
-  @keyframes colorchange
-    {
-      0%   {background: $grey-dark;}
-      50%  {background: $red-light;}
-      100% {background: $grey-dark}
-    }
+  background: url("assets/trash.png") no-repeat;
+  background-size: 100% 100%;
+}

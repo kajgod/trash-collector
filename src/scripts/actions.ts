@@ -5,6 +5,7 @@ import Animal from "../classes/animal.class";
 import { Direction, Game } from "../scripts/types";
 import levels from "../levels/levels";
 import { ticker } from "../main";
+import Settings from "../classes/settings.class";
 
 let player: Player,
   bushes: Bush[] = [],
@@ -13,8 +14,8 @@ let player: Player,
 
 const startLevel = (level: number, mountGame: HTMLElement): Game => {
   const charList: string[] = levels[level].split(/\n/);
-  for (let y: number = 1; y <= 20; y++)
-    for (let x: number = 1; x <= 20; x++) {
+  for (let y: number = 1; y <= Settings.resolution; y++)
+    for (let x: number = 1; x <= Settings.resolution; x++) {
       let cur: string = charList[y][x - 1];
       switch (cur) {
         case "0":
