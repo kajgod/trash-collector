@@ -13,7 +13,6 @@ let player: Player,
   animals: Animal[] = [],
   level: number,
   mountGame: HTMLElement;
-let active = true;
 
 const startLevel = (levelNo: number, target: HTMLElement): Game => {
   level = levelNo;
@@ -60,15 +59,18 @@ const startLevel = (levelNo: number, target: HTMLElement): Game => {
       }
     }
   const setActive = (v: boolean): void => {
-    active = v;
+    window.active = v;
   };
+  const hideOpeningTitle = () => {
+    document.getElementById("opening-title").style.display = 'none';
+  }
   return {
     player,
     bushes,
     trashes,
     animals,
-    active,
     setActive,
+    hideOpeningTitle
   };
 };
 
@@ -137,7 +139,7 @@ const checkCollisions = (game: Game) => {
 };
 
 const endGame = () => {
-  active = false;
+  window.active = false;
   alert(`You are dead! You managed to complete ${level} levels.`);
   firstLevel();
 };
@@ -150,7 +152,7 @@ const checkCompletedLevel = () => {
     nextLevel();
     return;
   }
-  active = false;
+  window.active = false;
   alert(`Well done! You completed all ${level + 1} levels!`);
   firstLevel();
 };

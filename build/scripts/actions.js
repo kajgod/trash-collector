@@ -6,7 +6,6 @@ import { Direction } from "../scripts/types";
 import levels from "../levels/levels";
 import Settings from "../classes/settings.class";
 let player, bushes = [], trashes = [], animals = [], level, mountGame;
-let active = true;
 const startLevel = (levelNo, target) => {
     level = levelNo;
     mountGame = target;
@@ -37,15 +36,18 @@ const startLevel = (levelNo, target) => {
             }
         }
     const setActive = (v) => {
-        active = v;
+        window.active = v;
+    };
+    const hideOpeningTitle = () => {
+        document.getElementById("opening-title").style.display = 'none';
     };
     return {
         player,
         bushes,
         trashes,
         animals,
-        active,
         setActive,
+        hideOpeningTitle
     };
 };
 const nextLevel = () => {
@@ -105,7 +107,7 @@ const checkCollisions = (game) => {
     });
 };
 const endGame = () => {
-    active = false;
+    window.active = false;
     alert(`You are dead! You managed to complete ${level} levels.`);
     firstLevel();
 };
@@ -118,7 +120,7 @@ const checkCompletedLevel = () => {
         nextLevel();
         return;
     }
-    active = false;
+    window.active = false;
     alert(`Well done! You completed all ${level + 1} levels!`);
     firstLevel();
 };

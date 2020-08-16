@@ -475,6 +475,19 @@ body #body #container #mount-game .element.animal {
     background-position: 0% 93.75%;
   }
 }
+body #body #container #opening-title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-image: url("/title.31199811.png");
+  background-size: cover;
+  background-color: #000000bb;
+  background-position-y: 56px;
+  z-index: 100;
+}
 
 
 

@@ -737,7 +737,6 @@ var player,
     animals = [],
     level,
     mountGame;
-var active = true;
 
 var startLevel = function startLevel(levelNo, target) {
   level = levelNo;
@@ -778,7 +777,11 @@ var startLevel = function startLevel(levelNo, target) {
   }
 
   var setActive = function setActive(v) {
-    active = v;
+    window.active = v;
+  };
+
+  var hideOpeningTitle = function hideOpeningTitle() {
+    document.getElementById("opening-title").style.display = 'none';
   };
 
   return {
@@ -786,8 +789,8 @@ var startLevel = function startLevel(levelNo, target) {
     bushes: bushes,
     trashes: trashes,
     animals: animals,
-    active: active,
-    setActive: setActive
+    setActive: setActive,
+    hideOpeningTitle: hideOpeningTitle
   };
 };
 
@@ -878,7 +881,7 @@ var checkCollisions = function checkCollisions(game) {
 exports.checkCollisions = checkCollisions;
 
 var endGame = function endGame() {
-  active = false;
+  window.active = false;
   alert("You are dead! You managed to complete ".concat(level, " levels."));
   firstLevel();
 };
@@ -895,7 +898,7 @@ var checkCompletedLevel = function checkCompletedLevel() {
     return;
   }
 
-  active = false;
+  window.active = false;
   alert("Well done! You completed all ".concat(level + 1, " levels!"));
   firstLevel();
 };
@@ -913,8 +916,9 @@ var mountGame = document.getElementById("mount-game");
 var game = (0, _actions.startLevel)(0, mountGame);
 var player = game.player;
 var animals = game.animals;
+window.active = false;
 var ticker = setInterval(function () {
-  if (game.active) {
+  if (window.active) {
     player.move();
     animals.map(function (animal) {
       animal.move();
@@ -924,7 +928,12 @@ var ticker = setInterval(function () {
 }, 100 / 3);
 exports.ticker = ticker;
 document.addEventListener("keydown", function (e) {
-  return player.switchDirection(e.code);
+  if (!window.active) {
+    window.active = true;
+    game.hideOpeningTitle();
+  }
+
+  player.switchDirection(e.code);
 });
 },{"./scripts/actions":"scripts/actions.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -954,7 +963,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33987" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41001" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

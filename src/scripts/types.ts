@@ -15,6 +15,6 @@ export interface Game {
   bushes: Bush[];
   trashes: Trash[];
   animals: Animal[];
-  active: boolean;
   setActive: (arg0: boolean) => void;
+  hideOpeningTitle: ()=>void;
 }
