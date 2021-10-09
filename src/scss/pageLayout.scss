@@ -1,3 +1,5 @@
+@use "sass:math";
+
 body {
   background: $black;
   font-family: sans-serif;
@@ -17,7 +19,7 @@ body {
       height: calc(100vmin - #{2 * $padding});
       background: $green;
       background-image: url("assets/grass.png");
-      background-size: #{100% / $resolution};
+      background-size: #{math.div(100%, $resolution)};
       @include eight-bit;
       #mount-game {
         position: relative;
