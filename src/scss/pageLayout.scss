@@ -4,7 +4,7 @@ body {
   background: $black;
   font-family: sans-serif;
   color: $white;
-
+  position: relative;
   #body {
     min-height: calc(100vh - #{2 * $padding});
     padding: $padding;
@@ -40,6 +40,49 @@ body {
         background-color: #000000bb;
         background-position-y: 56px;
         z-index: 100;
+      }
+    }
+  }
+  #mobile-commands {
+    position: absolute;
+    width: 100vw;
+    height: 100vw;
+    bottom: 0px;
+    left: 0px;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20vw;
+      height: 20vw;
+      background-color: rgba(100,100,100, 0.1);
+      position: absolute;
+      font-family:'Courier New', Courier, monospace;
+      font-size: 40px;
+      &#direction-left {
+        left: 10vw;
+        bottom: 25vw;
+        &:before {
+          content: "◀";
+        }
+      }
+      &#direction-right {
+        right: 10vw;
+        bottom: 25vw;&:before {
+          content: "▶";
+        }
+      }
+      &#direction-up {
+        left: 40vw;
+        bottom: 40vw;&:before {
+          content: "▲";
+        }
+      }
+      &#direction-down {
+        left: 40vw;
+        bottom: 10vw;&:before {
+          content: "▼";
+        }
       }
     }
   }
